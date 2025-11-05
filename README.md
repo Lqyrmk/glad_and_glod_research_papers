@@ -1,11 +1,5 @@
-# Welcome to [Slidev](https://github.com/slidevjs/slidev)!
+# glad_and_glod_research_papers
 
-To start the slide show:
+## Papers
 
-- `pnpm install`
-- `pnpm dev`
-- visit <http://localhost:3030>
-
-Edit the [slides.md](./slides.md) to see the changes.
-
-Learn more about Slidev at the [documentation](https://sli.dev/).
+- 📝 **ECML PKDD'2023 / CVTGAD** - "CVTGAD: Simplified Transformer with Cross-View Attention for Unsupervised Graph-level Anomaly Detection"
