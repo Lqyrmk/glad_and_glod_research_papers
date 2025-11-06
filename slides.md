@@ -78,6 +78,173 @@ h1 {
 </style>
 
 
+
+
+---
+transition: fade-out
+---
+
+# Motivations & Challenges
+
+### Challenges 1
+
+现有方法严重依赖 GNN 来提取图的特征，GNN 的感受野 (Receptive Field) 有限
+
+主要关注节点的局部信息
+
+* 忽略全局结构模式（intra-graph）
+* 忽略图与图之间的关系 (inter-graph)
+
+直觉方法：
+
+* 堆叠更多 GNN 层? (Over-smoothing)
+
+<img
+  class="absolute bottom-5 right-10 w-130 "
+  src="/1-2.png"
+  alt=""
+/>
+
+
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
+
+---
+transition: fade-out
+---
+
+# Motivations & Challenges
+
+### Challenges 2
+
+现有方法常用数据增强来构建多个视图 (e.g., 特征视图, 结构视图)。
+
+但处理方式是<span v-mark.circle.orange="1">“并行且分离” (parallel and separate) </span>的。
+
+* 各自处理不同视图
+* 整个过程中它们**互不通信**
+* 直到最后一步才计算一致性
+
+<div
+  class="absolute bottom-30 left-15 w-75"
+>
+  这种方式<b>无法直接探索</b>不同视图之间的相互关系，进而忽略了关键的<b>“视图共现性”</b>
+</div>
+
+<img
+  class="absolute bottom-0 right-10 w-140"
+  src="/1-2.png"
+  alt=""
+/>
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
+
+
+---
+transition: fade-out
+---
+
+# Motivations & Challenges
+
+### view co-occurrence
+
+图的特征和结构是<span v-mark.red="1">相互影响、相互纠缠</span>的。
+
+<div
+  class="absolute top-50 left-15 w-80"
+>
+  <ul>
+  <li>特征 &rarr; 结构：具有特定特征的节点，更容易形成异常的链接</li>
+  <li>结构 &rarr; 特征: 被异常链接所连接的节点，其特征也可能随之改变。</li>
+  </ul>
+
+<br>
+
+现有方法是<b>“先分离、后对比”</b>
+
+丢失了过程中<b>“共现”</b>的异常信号。
+</div>
+
+
+<img
+  class="absolute bottom-10 right-10 w-140 "
+  src="/1-2.png"
+  alt=""
+/>
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
+---
+transition: fade-out
+---
+
+# Contributions
+
+ 针对挑战提出两个核心模块
+
+**Challenge 1 (感受野受限):**
+
+* 采用一个 <span v-mark.blue="2">Simplified Transformer</span>
+
+$\rightarrow$ 利用 Transformer 的自注意力机制，获得**全局感受野**，捕捉图内和图间的复杂关系（intra and inter）
+
+**Challenge 2 (视图分离处理):**
+
+* 设计一种 <span v-mark.red="2">跨视图注意力 (Cross-View Attention)</span>
+
+$\rightarrow$ 直接捕获视图间的“共现性”，**显式地在编码过程中桥接不同视图的鸿沟**
+
+<span v-mark.circle.orange="4">首次将 Transformer 和 跨视图注意力 引入 UGAD 任务。</span>
+
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
 ---
 transition: slide-up
 level: 2
