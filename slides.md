@@ -26,7 +26,7 @@ duration: 35min
 
 # GLAD & GOLD Research Papers
 
-刘元铭<br><br>2025.11.6
+刘元铭<br>2025.11.6
 
 <div @click="$slidev.nav.next" class="mt-12 py-1" hover:bg="white op-10">
   Contents <carbon:arrow-right />
@@ -197,7 +197,7 @@ CVTGAD: Simplified Transformer with Cross-View Attention for Unsupervised Graph-
 
 
 <img
-  class="absolute bottom-10 right-10 w-130 "
+  class="absolute bottom-20 right-10 w-130 "
   src="/1-2.png"
   alt=""
 />
