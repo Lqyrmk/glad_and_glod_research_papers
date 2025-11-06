@@ -219,17 +219,17 @@ transition: fade-out
 
 **Challenge 1 (感受野受限):**
 
-* 采用一个 <span v-mark.blue="2">Simplified Transformer</span>
+* 采用一个 <span v-mark.blue="1">Simplified Transformer</span>
 
 $\rightarrow$ 利用 Transformer 的自注意力机制，获得**全局感受野**，捕捉图内和图间的复杂关系（intra and inter）
 
 **Challenge 2 (视图分离处理):**
 
-* 设计一种 <span v-mark.red="2">跨视图注意力 (Cross-View Attention)</span>
+* 设计一种 <span v-mark.red="1">跨视图注意力 (Cross-View Attention)</span>
 
 $\rightarrow$ 直接捕获视图间的“共现性”，**显式地在编码过程中桥接不同视图的鸿沟**
 
-<span v-mark.circle.orange="4">首次将 Transformer 和 跨视图注意力 引入 UGAD 任务。</span>
+<span v-mark.circle.orange="1">首次将 Transformer 和 跨视图注意力 引入 UGAD 任务。</span>
 
 
 <style>
@@ -243,6 +243,229 @@ h1 {
   -moz-text-fill-color: transparent;
 }
 </style>
+
+
+---
+transition: fade-out
+---
+
+# Methodology
+
+基本框架
+
+<img
+  class="absolute bottom-25 left-60 w-130 "
+  src="/1-3.png"
+  alt=""
+/>
+
+<img
+  class="absolute bottom-5 left-60 w-130 "
+  src="/1-5.png"
+  alt=""
+/>
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
+
+---
+transition: fade-out
+---
+
+# Methodology
+
+Simplified Transformer 细节
+
+<img
+  class="absolute bottom-30 left-50 w-150 "
+  src="/1-4.png"
+  alt=""
+/>
+
+<img
+  class="absolute bottom-5 left-60 w-130 "
+  src="/1-5.png"
+  alt=""
+/>
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
+---
+transition: fade-out
+---
+
+# Methodology
+
+1.Graph Pre-processing Module
+
+<br>
+<br>
+<br>
+
+<span v-mark.red="1">使用无扰动数据增强</span>得到**特征视图和结构视图**
+
+* 使用 GNN（如 GIN, GCN）作为 encoder
+* 然后做典中典 **READOUT**，获得图 Embedding
+
+特征和结构计算方式一样，这里只给出特征的计算
+
+
+<img
+  class="absolute top-40 right-10 w-120 "
+  src="/1-6.png"
+  alt=""
+/>
+
+<img
+  class="absolute top-70 right-10 w-120 "
+  src="/1-7.png"
+  alt=""
+/>
+
+
+<img
+  class="absolute bottom-30 right-10 w-120 "
+  src="/1-8.png"
+  alt=""
+/>
+
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
+
+---
+transition: fade-out
+---
+
+# Methodology
+
+2.Simplified Transformer-based Embedding Module
+
+<br>
+<br>
+
+将两个视图的**初步嵌入**输入到该模块
+* Simplified Transformer 负责**扩大感受野**
+* Cross-View Attention 负责**视图共现**
+
+输出融合了**全局信息**和**跨视图信息**的最终嵌入
+* intra 全局信息：靠 self-attention
+* inter 全局信息：<span v-mark.red="1">考虑一个batch $\mathcal{B}$中的样本</span>
+
+
+<img
+  class="absolute top-40 right-10 w-120 "
+  src="/1-9.png"
+  alt=""
+/>
+
+<img
+  class="absolute top-60 right-10 w-120 "
+  src="/1-10.png"
+  alt=""
+/>
+
+
+<img
+  class="absolute bottom-40 right-10 w-120 "
+  src="/1-11.png"
+  alt=""
+/>
+
+
+<img
+  class="absolute bottom-20 right-10 w-120 "
+  src="/1-12.png"
+  alt=""
+/>
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
+---
+transition: fade-out
+---
+
+# Methodology
+
+3.Adaptive Anomaly Scoring Module
+
+<img
+  class="absolute top-40 left-5 w-110 "
+  src="/1-13.png"
+  alt=""
+/>
+
+<img
+  class="absolute bottom-30 left-5 w-110 "
+  src="/1-14.png"
+  alt=""
+/>
+
+
+<img
+  class="absolute bottom-30 right-0 w-130 "
+  src="/1-15.png"
+  alt=""
+/>
+
+
+<style>
+h1 {
+  background-color: #2B90B6;
+  background-image: linear-gradient(45deg, #4EC5D4 10%, #146b8c 20%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+</style>
+
+
 
 
 ---
